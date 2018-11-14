@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -19,9 +25,12 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+/**
+ *
+ * @author Alan.Ryan
+ */
 @WebServlet(urlPatterns = {"/ShiroServlet"})
-public class ShiroServlet extends HttpServlet 
-{
+public class ShiroServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,19 +41,18 @@ public class ShiroServlet extends HttpServlet
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter())
-        {
+        try (PrintWriter out = response.getWriter()) {
+
             Subject currentUser = SecurityUtils.getSubject();
             
-            if (currentUser.hasRole("lecturer")) 
-            {
+            if (currentUser.hasRole("lecturer")) {
                 log(currentUser.getPrincipal().toString() + " is a lecturer");
             }
             
-            if (currentUser.hasRole("lecturer") && currentUser.hasRole("statistician")) 
-            {
+            if (currentUser.hasRole("lecturer") && currentUser.hasRole("statistician") ) {
                 log(currentUser.getPrincipal().toString() + " is a lecturer and a statistician");
             }
 
@@ -54,8 +62,9 @@ public class ShiroServlet extends HttpServlet
             roles.add("admin");
             
             boolean flags[] = currentUser.hasRoles(roles);
-            for (int i = 0; i < flags.length; i++) 
+            for (int i = 0; i < flags.length; i++) {
                 log(currentUser.getPrincipal().toString() + " is a " + roles.get(i) + "? " + flags[i]);
+            }
             
             if(currentUser.isPermitted("academic_content"))
                  log(currentUser.getPrincipal().toString() + " can access academic content");
@@ -63,7 +72,9 @@ public class ShiroServlet extends HttpServlet
             if(currentUser.isPermitted("stats_stuff"))
                  log(currentUser.getPrincipal().toString() + " can access stats content");
             
-                          
+     
+            
+            
 //            String nextPage;
 //            try {
 //                String username = request.getParameter("username");
@@ -108,6 +119,7 @@ public class ShiroServlet extends HttpServlet
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -144,5 +156,6 @@ public class ShiroServlet extends HttpServlet
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }

@@ -1,15 +1,16 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <% 
-            String redirectURL = "login.jsp";
-            response.sendRedirect(redirectURL); 
-        %>
-    </body>
-</html>
+<%@ include file="includes/header.jsp" %>
+
+<shiro:guest>
+    <div class="center">
+        <h1> Welcome to LIT Realty</h1>
+        <p>Please login to access our site</p>
+    </div>
+</shiro:guest>
+
+<shiro:user>
+    <div class="center">
+            <p>Welcome to LIT Realty Home Page</p>
+    </div>
+</shiro:user>
+
+<jsp:include page="includes/footer.jsp" />

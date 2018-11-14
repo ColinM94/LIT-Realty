@@ -1,43 +1,35 @@
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>LIT Realty Login</title>
-    </head>
-    <body>
-        <shiro:guest>
-        <form name="loginForm" method="post">
-            <c:if test="${shiroLoginFailure != null}">
-                Username or password incorrect
-            </c:if>
-            <table cellspacing="2" cellpadding="2">
-                <tr>
-                    <td><label for="username">Username:</label></td>
-                    <td><input type="text" name="username"/><td>
-                </tr>
-                <tr>
-                    <td><label for="password">Password:</label></td>
-                    <td><input type="password" name="password"/></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Login"/></td>
-                    <td><input type="reset" value="Reset"/></td>
-                </tr>
-            </table>
-            <br/>
-            <label for="rememberMe">Remember me:</label>
-            <input type="checkbox" name="rememberMe" value="true" />
-            <br/>
-        </form>
-        </shiro:guest>
+<%@ include file="includes/header.jsp" %>
 
-        <shiro:user>
-            You are already logged in.
-            <br>
-            <a href="/ShiroSoln/logout">Log Out</a>
-        </shiro:user>
-    </body>
-</html>
+<shiro:guest>
+<form name="loginForm" class="center" id="loginForm" method="post">
+    <c:if test="${shiroLoginFailure != null}">
+        Username or password incorrect
+    </c:if>
+    <table cellspacing="1" cellpadding="2">
+        <tr>
+            <td><input class="loginField" type="text" name="username" placeholder="Username"/><td>
+        </tr>
+        <tr>
+            <td><input class="loginField" type="password" name="password" placeholder="********"/></td>
+        </tr>
+        <tr>
+            <td>
+                <label id="rememberMeLabel" for="rememberMe">Remember Me:</label>
+                <input type="checkbox" id="rememberMe" name="rememberMe" value="true" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="1">
+                <input type="submit" id="loginBtn" value="Login"/>
+            </td>
+        </tr> 
+    </table>
+</form>
+</shiro:guest>
+
+<shiro:user>
+
+</shiro:user>
+
+<%@ include file="includes/footer.jsp" %>
+

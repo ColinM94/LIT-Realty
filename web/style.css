@@ -1,0 +1,108 @@
+/* ----- General ----- */
+html, body{
+    height: 100%;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    font-family: Titillium Web;
+    color: darkgrey;
+    background: #f3f3f3;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    position: relative;
+}
+
+.container{
+    position: relative;
+    max-width: 960px;
+    width: 96%;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto
+}
+
+h2{
+    color: white;
+}
+
+.content{
+    position: absolute;
+    left: 50%;
+}
+
+.center{
+    left: -50%;
+    position: relative;
+}
+
+/* ----- Header ----- */
+header{
+    background: #fff;
+    margin-bottom: 20px;
+    
+}
+
+.logo{
+    float: left;
+    margin-top: 10px;
+}
+
+nav{
+    float: right;
+    line-height: 70px;
+}
+
+nav li{
+    display: inline-block;
+    padding: 10px 25px;
+    margin-left: 10px;
+    margin-top: 25px;
+    background: #f3f3f3;
+    line-height: normal;
+    border: 1px solid;
+}
+
+.headerBtn{
+    text-decoration: none;
+    color: #545353;
+}
+
+/* ----- Footer ----- */
+footer{
+    background: lightgrey;
+    color: #666666;
+}
+
+/* ----- Login ----- */
+#loginForm{
+    margin-top: 100px;
+    background: white;
+    padding: 50px;
+    border: solid 1px;
+}
+
+#loginForm .loginField{
+    padding: 15px;
+    width: 250px;
+}
+
+#loginForm #loginBtn{
+    padding: 10px 25px;
+    width: 100%;
+    margin-top: 15px;
+    background: #1B8BD1;
+    color: white;
+    font-size: 1.01em;
+}
+
+#loginForm #rememberMe{
+    margin-top: 5px;
+}
+
+#loginForm #rememberMeLabel{
+    margin-top: 5px;
+    color: #666666;
+}

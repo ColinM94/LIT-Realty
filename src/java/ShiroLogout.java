@@ -1,3 +1,9 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -9,41 +15,46 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
+/**
+ *
+ * @author Alan.Ryan
+ */
 @WebServlet(urlPatterns = {"/ShiroLogout"})
-public class ShiroLogout extends HttpServlet 
-{  
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
+public class ShiroLogout extends HttpServlet {
+
+   
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) 
-        {            
+        try (PrintWriter out = response.getWriter()) {
+            
             String nextPage;
             
-            try 
-            {
+            try {
             Subject currentUser = SecurityUtils.getSubject();
 
-            if (!currentUser.isAuthenticated()) 
-            {
+            if (!currentUser.isAuthenticated()) {
                 log("Attempt to log out by a not authenticated user");
                 nextPage = "error.jsp";
                 throw new LogoutErrorException();
              }
-                         
+             
+             
              currentUser.logout();
              log(currentUser.getPrincipal().toString() + " has logged out");
              nextPage = "logout.jsp";
             }
-            catch(LogoutErrorException lee) 
-            {
+            catch(LogoutErrorException lee) {
                 log("A unauthenticated user has tried to log out " + lee);
             }
-                     
+             
+             
             RequestDispatcher rd = request.getRequestDispatcher("gone.jsp");
             rd.forward(request, response);
         }
     }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -53,8 +64,8 @@ public class ShiroLogout extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -67,8 +78,8 @@ public class ShiroLogout extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -78,8 +89,8 @@ public class ShiroLogout extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() 
-    {
+    public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }
