@@ -25,10 +25,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
-/**
- *
- * @author Alan.Ryan
- */
 @WebServlet(urlPatterns = {"/ShiroServlet"})
 public class ShiroServlet extends HttpServlet {
 
@@ -41,8 +37,8 @@ public class ShiroServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+    {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
@@ -62,7 +58,8 @@ public class ShiroServlet extends HttpServlet {
             roles.add("admin");
             
             boolean flags[] = currentUser.hasRoles(roles);
-            for (int i = 0; i < flags.length; i++) {
+            for (int i = 0; i < flags.length; i++) 
+            {
                 log(currentUser.getPrincipal().toString() + " is a " + roles.get(i) + "? " + flags[i]);
             }
             
