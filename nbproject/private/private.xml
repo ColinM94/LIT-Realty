@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/src/java/db/PropertyDB.java</file>
-            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/src/java/db/Property.java</file>
+            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/src/java/servlets/PropertyServlet.java</file>
             <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/web/index.jsp</file>
+            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/web/includes/header.jsp</file>
+            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/src/conf/MANIFEST.MF</file>
+            <file>file:/C:/Users/Colin/Documents/Github/LIT-Realty/web/META-INF/context.xml</file>
         </group>
     </open-files>
 </project-private>
