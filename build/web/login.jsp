@@ -28,7 +28,7 @@
 </shiro:guest>
 
 <shiro:user>
-
+    <c:redirect url="/index.jsp"/>
 </shiro:user>
 
 <%@ include file="includes/footer.jsp" %>

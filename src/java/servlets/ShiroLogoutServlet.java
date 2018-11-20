@@ -1,3 +1,5 @@
+package servlets;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,31 +22,34 @@ import org.apache.shiro.subject.Subject;
  * @author Alan.Ryan
  */
 @WebServlet(urlPatterns = {"/ShiroLogout"})
-public class ShiroLogout extends HttpServlet {
+public class ShiroLogoutServlet extends HttpServlet {
 
    
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
+        try (PrintWriter out = response.getWriter()) 
+        {          
             String nextPage;
             
-            try {
-            Subject currentUser = SecurityUtils.getSubject();
+            try 
+            {
+                Subject currentUser = SecurityUtils.getSubject();
 
-            if (!currentUser.isAuthenticated()) {
+            if (!currentUser.isAuthenticated()) 
+            {
                 log("Attempt to log out by a not authenticated user");
                 nextPage = "error.jsp";
                 throw new LogoutErrorException();
-             }
-             
-             
-             currentUser.logout();
-             log(currentUser.getPrincipal().toString() + " has logged out");
-             nextPage = "logout.jsp";
             }
-            catch(LogoutErrorException lee) {
+             
+             
+                currentUser.logout();
+                log(currentUser.getPrincipal().toString() + " has logged out");
+                nextPage = "logout.jsp";
+            }
+            catch(LogoutErrorException lee) 
+            {
                 log("A unauthenticated user has tried to log out " + lee);
             }
              

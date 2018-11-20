@@ -15,29 +15,36 @@ import javax.servlet.http.HttpServletResponse;
 public class PropertyServlet extends HttpServlet
 {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    {
-        List<Property> properties = PropertyDB.getAllProperties();
-        request.setAttribute("properties", properties);
+    { 
+        String type = "";
         
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+        // Checks if request was sent from a form or RequestDispatcher.
+        if(request.getAttribute("type") != null)
+            type = (String) request.getAttribute("type");
         
-        /*
-        // Get property id.
-        int id = Integer.parseInt(request.getParameter("id"));
+        // Checks if request was sent from a html link.
+        else if(request.getParameter("type") != null)
+            type = (String) request.getParameter("type");
+                    
+        if(type.equals("allProperties"))
+        {
+            List<Property> properties = PropertyDB.getAllProperties();
+            request.setAttribute("properties", properties);
 
-        Property property = PropertyDB.getPropertyById(id);
+            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+            rd.forward(request, response);
+        }
         
-        request.setAttribute("id", property.getId());
-        request.setAttribute("street", property.getStreet());
-        request.setAttribute("city", property.getCity());
-        request.setAttribute("bedrooms", property.getBedrooms());
-        request.setAttribute("bathrooms", property.getBathrooms());
-        request.setAttribute("squareFeet", property.getSquareFeet());
-        request.setAttribute("ber", property.getBerRating());
-        request.setAttribute("lotSize", property.getLotSize());
-        request.setAttribute("price", property.getPrice());
-        */
+        else if(type.equals("property"))
+        {
+            int id = Integer.parseInt(request.getParameter("id"));
+            
+            Property property = PropertyDB.getPropertyById(id);
+            request.setAttribute("property", property);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("property.jsp");
+            rd.forward(request, response);
+        }
     }
         
     @Override
