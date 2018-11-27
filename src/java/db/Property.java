@@ -17,7 +17,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Property.findAll", query = "SELECT p FROM Property p"),
-    @NamedQuery(name = "Property.findyById", query = "SELECT p FROM Property p WHERE p.id = :id")})
+    @NamedQuery(name = "Property.findyById", query = "SELECT p FROM Property p WHERE p.id = :id")
+})
 public class Property implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -80,6 +81,10 @@ public class Property implements Serializable
     private int garageId;
     
     @Basic(optional = false)
+    @Column(name = "agentId")
+    private int agentId;
+        
+    @Basic(optional = false)
     @Column(name = "photo")
     private String photo;
     
@@ -101,7 +106,7 @@ public class Property implements Serializable
         this.id = id;
     }
     
-    public Property(int id, String street, String city, int listingNum, int styleId, int typeId, int bedrooms, int bathrooms, int squareFeet, String berRating, String description, String lotSize, int garageSize, int garageId, String photo, float price, String dateAdded)
+    public Property(int id, String street, String city, int listingNum, int styleId, int typeId, int bedrooms, int bathrooms, int squareFeet, String berRating, String description, String lotSize, int garageSize, int garageId, int agentId, String photo, float price, String dateAdded)
     {
         this.id = id;
         this.street = street;
@@ -117,6 +122,7 @@ public class Property implements Serializable
         this.lotSize = lotSize;
         this.garageSize = garageSize;
         this.garageId = garageId;
+        this.agentId = agentId;
         this.photo = photo;
         this.price = price;
         this.dateAdded = dateAdded;
@@ -247,6 +253,11 @@ public class Property implements Serializable
         return garageSize;
     }
     
+    public void setGarageSize(int garageSize)
+    {
+        this.garageSize = garageSize;
+    }
+    
     public int getGarageId()
     {
         return garageId;
@@ -255,6 +266,16 @@ public class Property implements Serializable
     public void setGarageId(int garageId)
     {
         this.garageId = garageId;
+    }
+    
+    public int getAgentId()
+    {
+        return agentId;
+    }
+    
+    public void setAgentId(int agentId)
+    {
+        this.agentId = agentId;
     }
     
     public String getPhoto()

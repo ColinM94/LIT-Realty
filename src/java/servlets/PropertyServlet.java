@@ -15,35 +15,83 @@ import javax.servlet.http.HttpServletResponse;
 public class PropertyServlet extends HttpServlet
 {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
-    { 
-        String type = "";
+    {                   
+        String requestType = "";
         
-        // Checks if request was sent from a form or RequestDispatcher.
-        if(request.getAttribute("type") != null)
-            type = (String) request.getAttribute("type");
+        // Gets request type. 
+        if(request.getAttribute("requestType") != null)
+            requestType = (String) request.getAttribute("requestType");
         
-        // Checks if request was sent from a html link.
-        else if(request.getParameter("type") != null)
-            type = (String) request.getParameter("type");
-                    
-        if(type.equals("allProperties"))
-        {
-            List<Property> properties = PropertyDB.getAllProperties();
-            request.setAttribute("properties", properties);
 
-            RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
-            rd.forward(request, response);
-        }
+        else if(request.getParameter("requestType") != null)
+            requestType = (String) request.getParameter("requestType");
+                  
         
-        else if(type.equals("property"))
+        System.out.print("\n\n\n Debugging: " + requestType + "\n\n\n");
+        
+        switch (requestType) 
         {
-            int id = Integer.parseInt(request.getParameter("id"));
-            
-            Property property = PropertyDB.getPropertyById(id);
-            request.setAttribute("property", property);
-            
-            RequestDispatcher rd = request.getRequestDispatcher("property.jsp");
-            rd.forward(request, response);
+            case "property":
+            {
+                int id = Integer.parseInt(request.getParameter("id"));
+                Property property = PropertyDB.getPropertyById(id);
+                request.setAttribute("property", property);
+                RequestDispatcher rd = request.getRequestDispatcher("property.jsp");
+                rd.forward(request, response);
+                break;
+            }
+            case "allProperties":
+            {
+                List<Property> properties = PropertyDB.getAllProperties();
+                request.setAttribute("properties", properties);
+                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                rd.forward(request, response);    
+                break;
+            }
+            case "add":
+            {                  
+
+                                
+                Property property = new Property();
+                property.setStreet(request.getParameter("street"));
+                property.setCity(request.getParameter("city"));
+                property.setListingNum(Integer.parseInt(request.getParameter("listingNum")));
+                property.setStyleId(Integer.parseInt(request.getParameter("style")));
+                property.setTypeId(Integer.parseInt(request.getParameter("type")));
+                property.setBedrooms(Integer.parseInt(request.getParameter("bedrooms")));
+                property.setBathrooms(Integer.parseInt(request.getParameter("bathrooms")));
+                property.setSquareFeet(Integer.parseInt(request.getParameter("squareFeet")));
+                property.setBerRating(request.getParameter("berRating"));
+                property.setDescription(request.getParameter("description"));
+                property.setLotSize(request.getParameter("lotSize"));
+                property.setGarageSize(Integer.parseInt(request.getParameter("garageSize")));
+                property.setGarageId(Integer.parseInt(request.getParameter("garage")));
+                property.setAgentId(Integer.parseInt(request.getParameter("agent")));
+                property.setPrice(Float.valueOf(request.getParameter("price")));
+                property.setDateAdded("2018-11-27");
+                
+                PropertyDB.addProperty(property);
+                
+                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                rd.forward(request, response);   
+                break;
+            }
+            case "delete":
+            {
+                int id = Integer.parseInt(request.getParameter("id"));
+                PropertyDB.removeProperty(id);
+                RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+                rd.forward(request, response);
+                break;
+            }
+            case "update":
+            {
+                break;   
+            }
+            case "":
+            {
+                System.out.print("Empty Request");
+            }
         }
     }
         

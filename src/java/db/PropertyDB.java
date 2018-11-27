@@ -3,6 +3,7 @@ package db;
 import java.util.List;
 import java.util.Properties;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpServletRequest;
 
 public class PropertyDB 
 {
@@ -17,6 +18,26 @@ public class PropertyDB
     {
         EntityManager em = DBUtil.getEmf().createEntityManager();
         
-        return em.createQuery("SELECT p FROM Property p", Property.class).getResultList();
+        return em.createNamedQuery("Property.findAll", Property.class).getResultList();
+    }
+    
+    public static void removeProperty(int id)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        
+        Property property = em.find(Property.class, id);
+
+        em.getTransaction().begin();
+        em.remove(property);
+        em.getTransaction().commit();
+    }
+    
+    public static void addProperty(Property property)
+    {
+       EntityManager em = DBUtil.getEmf().createEntityManager();
+       
+       em.getTransaction().begin();
+       em.persist(property);        
+       em.getTransaction().commit();
     }
 }
