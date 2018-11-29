@@ -28,12 +28,12 @@
                     <td>${property.bedrooms}</td>
                     <td>${property.bathrooms}</td>
                     <td>${property.squareFeet}</td>
-                    <td>${property.berRating}</td>
+                    <td><img id="berPic" src="images/BER/${property.berRating}.png"></td>
                     <td>${property.lotSize}</td>
                     <td>&euro;${property.price}</td>
-                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&type=edit">Edit</a></td>
-                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&type=delete">X</a></td>
-                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&type=property"><img src="images/properties/thumbs/${property.photo}.jpg" height="50" width="75"></a></td>
+                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&requestType=edit">Edit</a></td>
+                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&requestType=delete">X</a></td>
+                    <td><a href="<%=request.getContextPath()%>/PropertyServlet?id=${property.id}&requestType=property"><img src="images/properties/thumbs/${property.photo}.jpg" height="50" width="75"></a></td>
                 </tr>
             </c:forEach>
         </tbody>

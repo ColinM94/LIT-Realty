@@ -1,6 +1,7 @@
 <%@ include file="includes/header.jsp" %>
 
 <shiro:user>
+<div class="center">  
 <!-- Slideshow container -->
     <div class="slideshow-container">
 
@@ -32,18 +33,17 @@
       <span class="dot" onclick="currentSlide(2)"></span> 
       <span class="dot" onclick="currentSlide(3)"></span> 
     </div>  
-
-<div class="center">   
-         
+        
     <table>
             <tr><td>Street: ${property.street}<td></tr>
             <tr><td>City: ${property.city}<td></tr>
             <tr><td>Bedrooms: ${property.bedrooms}<td></tr>
             <tr><td>Bathrooms: ${property.bathrooms}<td></tr>
             <tr><td>Square Feet: ${property.squareFeet}<td></tr>
-            <tr><td>BER: ${property.berRating}<td></tr>
+            <tr><td><img id="berPic" src="images/BER/${property.berRating}.png"><td></tr>
             <tr><td>Lot Size: ${property.lotSize}<td></tr>
             <tr><td>Price: &euro;${property.price}<td></tr>
+            <tr><td>Description: ${property.description}<td></tr>
     </table>                            
 </div>
         
