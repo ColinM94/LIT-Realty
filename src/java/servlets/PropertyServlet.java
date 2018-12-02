@@ -40,6 +40,7 @@ public class PropertyServlet extends HttpServlet
                 rd.forward(request, response);
                 break;
             }
+            
             case "allProperties":
             {
                 List<Property> properties = PropertyDB.getAllProperties();
@@ -48,10 +49,9 @@ public class PropertyServlet extends HttpServlet
                 rd.forward(request, response);    
                 break;
             }
+            
             case "add":
-            {                  
-
-                                
+            {                                               
                 Property property = new Property();
                 property.setStreet(request.getParameter("street"));
                 property.setCity(request.getParameter("city"));
@@ -76,6 +76,7 @@ public class PropertyServlet extends HttpServlet
                 rd.forward(request, response);   
                 break;
             }
+            
             case "delete":
             {
                 int id = Integer.parseInt(request.getParameter("id"));
@@ -84,10 +85,25 @@ public class PropertyServlet extends HttpServlet
                 rd.forward(request, response);
                 break;
             }
+            
             case "update":
             {
                 break;   
             }
+            
+            case "search":
+            {
+                float minPrice = Float.valueOf(request.getParameter("minPrice"));
+                float maxPrice = Float.valueOf(request.getParameter("maxPrice"));
+                String city = request.getParameter("city");             
+                
+                List<Property> properties = PropertyDB.searchProperty(minPrice, maxPrice, city);
+                request.setAttribute("properties", properties);
+                RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
+                rd.forward(request, response);  
+                break;
+            }
+            
             case "":
             {
                 System.out.print("Empty Request");

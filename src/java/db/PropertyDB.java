@@ -40,4 +40,14 @@ public class PropertyDB
        em.persist(property);        
        em.getTransaction().commit();
     }
+    
+    public static List<Property> searchProperty(float minPrice, float maxPrice, String city)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        
+        return em.createNamedQuery("Property.search", Property.class)
+        .setParameter("minPrice", minPrice)
+        .setParameter("maxPrice", maxPrice)
+        .setParameter("city", city).getResultList();     
+    }
 }

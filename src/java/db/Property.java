@@ -17,7 +17,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Property.findAll", query = "SELECT p FROM Property p"),
-    @NamedQuery(name = "Property.findyById", query = "SELECT p FROM Property p WHERE p.id = :id")
+    @NamedQuery(name = "Property.findyById", query = "SELECT p FROM Property p WHERE p.id = :id"),
+    @NamedQuery(name = "Property.search", query = "SELECT p FROM Property p WHERE p.price > :minPrice AND p.price < :maxPrice AND p.city = :city")
 })
 public class Property implements Serializable
 {
