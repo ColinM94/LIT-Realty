@@ -21,12 +21,29 @@ public class PropertyDB
         return em.createNamedQuery("Property.findAll", Property.class).getResultList();
     }
     
-    public static void removeProperty(int id)
+    public static List<Property> getAgentProperties(String username)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        return em.createNamedQuery("Property.findAgentProperties", Property.class)
+        .setParameter("username", username).getResultList(); 
+    }
+    
+    public static List<Property> getAllArchivedProperties()
     {
         EntityManager em = DBUtil.getEmf().createEntityManager();
         
-        Property property = em.find(Property.class, id);
-
+        return em.createNamedQuery("Property.findAllArchived", Property.class).getResultList();
+    }   
+    
+    public static void removeProperty(Property property)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        
+        if(!em.contains(property))
+        {
+            property = em.merge(property);
+        }
+        
         em.getTransaction().begin();
         em.remove(property);
         em.getTransaction().commit();
@@ -34,20 +51,51 @@ public class PropertyDB
     
     public static void addProperty(Property property)
     {
-       EntityManager em = DBUtil.getEmf().createEntityManager();
+        EntityManager em = DBUtil.getEmf().createEntityManager();
        
-       em.getTransaction().begin();
-       em.persist(property);        
-       em.getTransaction().commit();
+        em.getTransaction().begin();
+        em.persist(property);        
+        em.getTransaction().commit();
+    }
+    
+    public static void archiveProperty(Property property)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        
+        property.setArchived(1);
+            
+        em.getTransaction().begin();
+        em.merge(property);
+        em.getTransaction().commit();
+    }
+    
+    public static void unarchiveProperty(Property property)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+        
+        property.setArchived(0);
+            
+        em.getTransaction().begin();
+        em.merge(property);
+        em.getTransaction().commit();
     }
     
     public static List<Property> searchProperty(float minPrice, float maxPrice, String city)
     {
         EntityManager em = DBUtil.getEmf().createEntityManager();
         
-        return em.createNamedQuery("Property.search", Property.class)
+        return em.createNamedQuery("Property.searchByMinMaxCity", Property.class)
         .setParameter("minPrice", minPrice)
         .setParameter("maxPrice", maxPrice)
         .setParameter("city", city).getResultList();     
+    }
+    
+    public static void updateProperty(Property property)
+    {
+        EntityManager em = DBUtil.getEmf().createEntityManager();
+                
+        em.getTransaction().begin();
+        em.merge(property);
+        em.getTransaction().commit();
     }
 }

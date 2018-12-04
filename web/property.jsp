@@ -1,24 +1,17 @@
 <%@ include file="includes/header.jsp" %>
+<%@ page import="java.io.File" %>
 
-<shiro:user>
-<div class="center">  
+<div class="center wide">  
+<c:if test="${pics == 1}">
 <!-- Slideshow container -->
     <div class="slideshow-container">
       <!-- Full-width images with number and caption text -->
-      <div class="mySlides fade">
-        <div class="numbertext">1 / 3</div>
-        <img src="images/properties/large/${property.photo}/${property.photo}.jpg" style="width:100%">
-      </div>
-
-      <div class="mySlides fade">
-        <div class="numbertext">2 / 3</div>
-        <img src="images/properties/large/${property.photo}/${property.photo}${"-1"}.jpg" style="width:100%">
-      </div>
-
-      <div class="mySlides fade">
-        <div class="numbertext">3 / 3</div>
-        <img src="images/properties/large/${property.photo}/${property.photo}${"-2"}.jpg" style="width:100%">
-      </div>
+        <c:forEach var = "i" begin = "0" end = "${imageCount-1}" varStatus="loop">
+            <div class="mySlides fade">
+                <div class="numbertext"> ${i+1} / ${imageCount} </div>
+                <img src="images/properties/large/${property.photo}/${property.photo}-${i}.jpg" style="width:100%">
+            </div>
+        </c:forEach>
 
       <!-- Next and previous buttons -->
       <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -28,15 +21,15 @@
 
     <!-- The dots/circles -->
     <div style="text-align:center">
-      <span class="dot" onclick="currentSlide(1)"></span> 
-      <span class="dot" onclick="currentSlide(2)"></span> 
-      <span class="dot" onclick="currentSlide(3)"></span> 
+        <c:forEach var = "i" begin = "0" end = "${imageCount-1}">
+            <span class="dot" onclick="currentSlide(${i})"></span> 
+        </c:forEach>
     </div>  
-        
+</c:if>      
     <table>
         <tr><td><img id="berPic" src="images/BER/${property.berRating}.png"><td></tr>
         <tr><td>Street: ${property.street}</td></tr>
-        <tr><td>City: ${property.city}</td></tr>
+        <tr><td>City: ${property.city}</td></tr> 
         <tr><td>Bedrooms: ${property.bedrooms}</td></tr>
         <tr><td>Bathrooms: ${property.bathrooms}</td></tr>
         <tr><td>Square Feet: ${property.squareFeet}</td></tr>
@@ -110,9 +103,4 @@
       dots[slideIndex-1].className += " active";
     }
     </script>
-</shiro:user>
-    
-<shiro:guest>
-    <c:redirect url="index.jsp"/>
-</shiro:guest>
 <%@ include file="includes/footer.jsp" %>

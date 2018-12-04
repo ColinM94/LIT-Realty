@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -16,9 +17,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "properties")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Property.findAll", query = "SELECT p FROM Property p"),
+    @NamedQuery(name = "Property.findAll", query = "SELECT p FROM Property p WHERE p.archived = 0"),
+    @NamedQuery(name = "Property.findAllArchived", query = "SELECT p FROM Property p WHERE p.archived = 1"),
     @NamedQuery(name = "Property.findyById", query = "SELECT p FROM Property p WHERE p.id = :id"),
-    @NamedQuery(name = "Property.search", query = "SELECT p FROM Property p WHERE p.price > :minPrice AND p.price < :maxPrice AND p.city = :city")
+    @NamedQuery(name = "Property.searchByMinMaxCity", query = "SELECT p FROM Property p WHERE p.price > :minPrice AND p.price < :maxPrice AND p.city = :city"),
+    @NamedQuery(name = "Property.findAgentProperties", query = "SELECT p FROM Property p WHERE p.agent = :username")
 })
 public class Property implements Serializable
 {
@@ -82,8 +85,8 @@ public class Property implements Serializable
     private int garageId;
     
     @Basic(optional = false)
-    @Column(name = "agentId")
-    private int agentId;
+    @Column(name = "agent")
+    private String agent;
         
     @Basic(optional = false)
     @Column(name = "photo")
@@ -97,6 +100,10 @@ public class Property implements Serializable
     @Column(name = "dateAdded")
     private String dateAdded;
     
+    @Basic(optional = false)
+    @Column(name = "archived")
+    private int archived;
+    
     public Property()
     {
 
@@ -107,7 +114,7 @@ public class Property implements Serializable
         this.id = id;
     }
     
-    public Property(int id, String street, String city, int listingNum, int styleId, int typeId, int bedrooms, int bathrooms, int squareFeet, String berRating, String description, String lotSize, int garageSize, int garageId, int agentId, String photo, float price, String dateAdded)
+    public Property(int id, String street, String city, int listingNum, int styleId, int typeId, int bedrooms, int bathrooms, int squareFeet, String berRating, String description, String lotSize, int garageSize, int garageId, String agent, String photo, float price, String dateAdded, int archived)
     {
         this.id = id;
         this.street = street;
@@ -123,10 +130,11 @@ public class Property implements Serializable
         this.lotSize = lotSize;
         this.garageSize = garageSize;
         this.garageId = garageId;
-        this.agentId = agentId;
+        this.agent = agent;
         this.photo = photo;
         this.price = price;
         this.dateAdded = dateAdded;
+        this.archived = archived;
     }
     
     public int getId()
@@ -269,14 +277,14 @@ public class Property implements Serializable
         this.garageId = garageId;
     }
     
-    public int getAgentId()
+    public String getAgent()
     {
-        return agentId;
+        return agent;
     }
     
-    public void setAgentId(int agentId)
+    public void setAgent(String agent)
     {
-        this.agentId = agentId;
+        this.agent = agent;
     }
     
     public String getPhoto()
@@ -307,5 +315,15 @@ public class Property implements Serializable
     public String getDateAdded()
     {
         return dateAdded;
+    }
+    
+    public int getArchived()
+    {
+        return archived;
+    }
+    
+    public void setArchived(int archived)
+    {
+        this.archived = archived;
     }
 }

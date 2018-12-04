@@ -1,4 +1,8 @@
 /* ----- General ----- */
+*{
+    text-decoration: none;
+}
+
 html, body{
     height: 100%;
 }
@@ -34,6 +38,15 @@ h2{
 }
 
 .center{
+    left: -50%;
+    position: relative;
+}
+
+.wide{
+    min-width: 600px;
+}
+
+.centerLogin{
     left: -50%;
     position: relative;
 }

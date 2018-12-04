@@ -1,12 +1,13 @@
 <%@page import="org.apache.shiro.subject.Subject"%>
 <%@page import="org.apache.shiro.SecurityUtils"%>
-<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%
     Subject currentUser = SecurityUtils.getSubject();
-    String a = (String)currentUser.getPrincipal();
+    String user = (String)currentUser.getPrincipal();
+    session.setAttribute("username", user);
 %>
 <!DOCTYPE html>
 <html>
@@ -19,13 +20,23 @@
         
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-	<script>
-            $(document).ready(function() {$('#dataTable').DataTable({
+        <script>
+
+            $(document).ready(function() {$('#userProperties').DataTable({
                 // Disables ordering on selected columns. 
-                "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 9, 10, 11 ] } ] } );
+                "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 6, 9, 10, 11 ] } ] } );
             });
+
+            $(document).ready(function() {$('#guestProperties').DataTable({
+                // Disables ordering on selected columns. 
+                "aoColumnDefs": [ { "bSortable": false, "aTargets": [ 6, 9] } ] } );
+            });
+
+            function confirmUser()
+            {
+                confirm("Are you sure?");
+            }
         </script>
-   
         <title>LIT Realty</title>     
     </head>
     
@@ -49,7 +60,7 @@
                 </nav>
                 <shiro:user>
                 <nav>
-                    <img id="headerPic" src="images/agents/1.jpg">
+                    <img id="headerPic" src="images/agents/${sessionScope.username}.jpg">
                 </nav>
                 </shiro:user>
             </div>
